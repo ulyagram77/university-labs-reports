@@ -1,0 +1,79 @@
+\section{Завдання}
+Для наведених прикладів ланцюжків побудувати правила граматики.
+Перевірити правильність складання правил за допомогою виведення.
+Перевірити наявність непродуктивних та недосяжних символів:
+
+\begin{enumerate}
+    \item \verb|cout<<((N>=1)&&(N<=10)); cout<<(“Y”); cout<<(“N”);|
+    \item \verb|cout<<((N!=1)&&(N=10)); cout<<(“N”);|
+    \item \verb|cout<<(“Y”); cout<<((N>=1));|
+    \item \verb|cout<<(“N”);|
+\end{enumerate}
+
+\section{Опис граматики}
+\begin{enumerate}
+    \item  \verb|I| $\to$ \verb|ER|
+    \item  \verb|R| $\to$ \verb|ER or $|
+    \item  \verb|E| $\to$ \verb|cout<<(AR1);|
+    \item  \verb|A| $\to$ \verb|(N>=1) or (N<=10) or (N!=1) or (N=10) or "Y" or "N"|
+    \item  \verb|R1| $\to$ \verb|&&AR1 or $|
+\end{enumerate}
+
+
+\newpage
+\section{Перевірка граматики}
+Приклад для перевірки: \verb|cout<<(“Y”); cout<<((N>=1));|
+\begin{itemize}
+    \item[]  I $\xrightarrow{1}$ \verb|ER|
+    \item[]  $\xrightarrow{3}$ \verb|cout<<(AR1); R|
+    \item[]  $\xrightarrow{4.5}$ \verb|cout<<("Y"R1); R|
+    \item[]  $\xrightarrow{5.2}$ \verb|cout<<("Y"); R|
+    \item[]  $\xrightarrow{2.1}$ \verb|cout<<("Y"); ER|
+    \item[]  $\xrightarrow{3}$ \verb|cout<<("Y"); cout<<(AR1); R|
+    \item[]  $\xrightarrow{4.1}$ \verb|cout<<("Y"); cout<<((N>=1)R1); R|
+    \item[]  $\xrightarrow{5.2}$ \verb|cout<<("Y"); cout<<((N>=1)); R|
+    \item[]  $\xrightarrow{2.2}$ \verb|cout<<("Y"); cout<<((N>=1));|
+\end{itemize}
+
+\section{Перевірка на непродуктивність}
+\begin{enumerate}
+    \item  R E A R1
+    \item  R E A R1 E
+    \item  нема непродуктивних символів
+\end{enumerate}
+
+\section{Перевірка на недосяжність}
+\begin{enumerate}
+    \item  I
+    \item  I E R
+    \item  I E R A R1
+    \item  нема недосяжних символів
+\end{enumerate}
+
+
+\newpage
+\section{Побудова функції ПЕРШ}
+\begin{itemize}
+    \item  ПЕРШ(1) = ПЕРШ(\texttt{E}) = \texttt{\{cout\}}
+    \item  ПЕРШ(2.1) = ПЕРШ(\texttt{E}) = \texttt{\{cout\}}
+    \item  ПЕРШ(2.2) = \texttt{\{\$\}}
+    \item  ПЕРШ(3) = \texttt{\{cout\}}
+    \item  ПЕРШ(4.1) = \texttt{\{(N>=1)\}}
+    \item  ПЕРШ(4.2) = \texttt{\{(N<=10)\}}
+    \item  ПЕРШ(4.3) = \texttt{\{(N!=1)\}}
+    \item  ПЕРШ(4.4) = \texttt{\{(N=10)\}}
+    \item  ПЕРШ(4.5) = \texttt{\{("Y")\}}
+    \item  ПЕРШ(4.6) = \texttt{\{("N")\}}
+    \item  ПЕРШ(5.1) = \texttt{\{\&\}}
+    \item  ПЕРШ(5.2) = \texttt{\{\$\}}
+\end{itemize}
+
+
+\section{Побудова функції СЛІД}
+\begin{itemize}
+    \item  СЛІД(\verb|I|) = \{\verb|$|\}
+    \item  СЛІД(\verb|R|) = \{\verb|$|\}
+    \item  СЛІД(\verb|E|) = \{\verb|&&|, \verb|cout|\, \verb|$|\}
+    \item  СЛІД(\verb|A|) = \{\verb|&&|, \verb|$|\}
+    \item  СЛІД(\verb|R1|) = \{\verb|$|\}
+\end{itemize}
