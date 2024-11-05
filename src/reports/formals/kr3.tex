@@ -1,0 +1,123 @@
+\section{Завдання}
+Для наведених прикладів ланцюжків побудувати правила граматики.
+Перевірити правильність складання правил за допомогою виведення.
+Перевірити наявність непродуктивних та недосяжних символів:
+
+
+\section{Побудова правил граматики}
+\begin{enumerate}
+    \item \verb|#define S(X) ((X) * (X))|
+    \item \verb|#define C(X) (S(X)*(X))|
+    \item \verb|#define C(X) ( )|
+    \item \verb|#define S(X) ( )|
+\end{enumerate}
+
+\subsection{Опис граматики}
+Хочу зазначити що я побудував спрощену граматику для швидкого вирішення контрольної роботи, щоб зменшити кількість команд розпізнавача, правил граматики, функцій СЛІД, ПЕРШ та ВИБІР.
+Для цього наступні символи будуть розпізнаватися як окремі термінали:  \verb|#define, C(X), S(X), (X)|.
+
+\begin{enumerate}
+    \item  \verb|I| $\to$ \verb|#define A (AR)|
+    \item  \verb|A| $\to$ \verb|S(X) or C(X) or (X) or $|
+    \item  \verb|R| $\to$ \verb|*AR or $|
+\end{enumerate}
+
+\newpage
+\subsection{Перевірка граматики}
+Приклад для перевірки: \verb|#define C(X) (S(X)*(X))|
+\begin{itemize}
+    \item[]  I $\xrightarrow{1}$ \verb|#define A (AR)|
+    \item[]  $\xrightarrow{2.2}$ \verb|#define C(X) (AR)|
+    \item[]  $\xrightarrow{2.1}$ \verb|#define C(X) (S(X)R)|
+    \item[]  $\xrightarrow{3.1}$ \verb|#define C(X) (S(X)*AR)|
+    \item[]  $\xrightarrow{2.3}$ \verb|#define C(X) (S(X)*(X)R)|
+    \item[]  $\xrightarrow{3.2}$ \verb|#define C(X) (S(X)*(X))|
+\end{itemize}
+
+\subsection{Перевірка на непродуктивність}
+\begin{enumerate}
+    \item  A R
+    \item  A R I
+    \item  нема непродуктивних символів
+\end{enumerate}
+
+\subsection{Перевірка на недосяжність}
+\begin{enumerate}
+    \item  I
+    \item  I A R
+    \item  нема недосяжних символів
+\end{enumerate}
+
+\subsection{Тип граматики}
+Граматика не є простою. Але одночасно схожа на LL(1) та слабкорозділену граматику, думаю що вона більш схожа на слабкорозділену.
+
+\newpage
+\section{Побудова магазинного автомату}
+\subsection{Побудова функції ПЕРШ}
+\begin{itemize}
+    \item  ПЕРШ(\verb|I| $\to$ \verb|#define A (AR)|) = \{\verb|#define|\}
+    \item  ПЕРШ(\verb|A| $\to$ \verb|S(X)|) = \{\verb|S(X)|\}
+    \item  ПЕРШ(\verb|A| $\to$ \verb|C(X)|) = \{\verb|C(X)|\}
+    \item  ПЕРШ(\verb|A| $\to$ \verb|(X)|) = \{\verb|(X)|\}
+    \item  ПЕРШ(\verb|A| $\to$ \verb|$|) = \{\verb|$|\}
+    \item  ПЕРШ(\verb|R| $\to$ \verb|*AR|) = \{\verb|*|\}
+    \item  ПЕРШ(\verb|R| $\to$ \verb|$|) = \{\verb|$|\}
+\end{itemize}
+
+\subsection{Побудова функції СЛІД}
+\begin{itemize}
+    \item  СЛІД(\verb|I|) = \{\verb|$|\}
+    \item  СЛІД(\verb|A|) = \{\verb|(|\} $\cup$ ПЕРШ(\verb|R|) = \{\verb|(|, \verb|)|, \verb|*|\}
+    \item  СЛІД(\verb|R|) = \{\verb|)|\}
+
+\end{itemize}
+
+\subsection{Побудова функції ВИБІР}
+\begin{itemize}
+    \item  ВИБІР(\verb|I| $\to$ \verb|#define A (AR)|) = ПЕРШ(1) = \{\verb|#define|\}
+    \item  ВИБІР(\verb|A| $\to$ \verb|S(X)|) = ПЕРШ(2.1) = \{\verb|S(X)|\}
+    \item  ВИБІР(\verb|A| $\to$ \verb|C(X)|) = ПЕРШ(2.2) = \{\verb|C(X)|\}
+    \item  ВИБІР(\verb|A| $\to$ \verb|(X)|) = ПЕРШ(2.3) = \{\verb|(X)|\}
+    \item  ВИБІР(\verb|A| $\to$ \verb|$|) = СЛІД(2.4) = \{\verb|(|, \verb|)|, \verb|*|\}
+    \item  ВИБІР(\verb|R| $\to$ \verb|*AR|) = ПЕРШ(3.1) = \{\verb|*|\}
+    \item  ВИБІР(\verb|R| $\to$ \verb|$|) = СЛІД(3.2) = \{\verb|)|\}
+\end{itemize}
+
+
+\newpage
+\subsection{Побудова команд розпізнавача}
+\begin{enumerate}
+    \item  f (\verb|s, #define, I |) = \verb|(s, )RA(A)|\
+    \item  f (\verb|s, S(X), A |) = \verb|(s, $)|\
+    \item  f (\verb|s, C(X), A |) = \verb|(s, $)|\
+    \item  f (\verb|s, (X), A |) = \verb|(s, $)|\
+    \item  f* (\verb|s, (, A |) = \verb|(s, $)|\
+    \item  f* (\verb|s, ), A |) = \verb|(s, $)|\
+    \item  f* (\verb|s, *, A |) = \verb|(s, $)|\
+    \item  f (\verb|s, *, R |) = \verb|(s, RA)|\
+    \item  f* (\verb|s, ), R |) = \verb|(s, $)|\
+    \item  f (\verb|s, (, ( |) = \verb|(s, $)|\
+    \item  f (\verb|s, ), ) |) = \verb|(s, $)|\
+    \item  f* (\verb|s, $, h0 |) = \verb|(s, $)|\
+
+\end{enumerate}
+
+\subsection{Перевірка ланцюжка}
+Ланцюжок: \verb|#define C(X) (S(X)*(X))|
+
+\begin{itemize}
+    \item  (s, \verb|#define C(X) (S(X)*(X))$|, $h_{0}$I) |- 1
+    \item  (s, \verb|C(X) (S(X)*(X))$|, $h_{0}$)RA(A) |- 3
+    \item  (s, \verb|(S(X)*(X))$|, $h_{0}$)RA() |- 10
+    \item  (s, \verb|S(X)*(X))$|, $h_{0}$)RA) |- 2
+    \item  (s, \verb|*(X))$|, $h_{0}$)R) |- 8
+    \item  (s, \verb|(X))$|, $h_{0}$)RA) |- 4
+    \item  (s, \verb|)$|, $h_{0}$)R) |- 9
+    \item  (s, \verb|)$|, $h_{0}$)) |- 11
+    \item  (s, \verb|$|, $h_{0}$) |- 12
+    \item  (s, \verb|$|, \verb|$|) - Заключна конфігурація
+\end{itemize}
+
+Після перевірки ми дійшли до заключної конфігурації, отже рядок належить до граматики.
+
+
