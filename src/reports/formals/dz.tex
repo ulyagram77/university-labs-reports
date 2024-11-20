@@ -1,0 +1,209 @@
+\section{Завдання}
+Для наведених прикладів ланцюжків побудувати правила граматики.
+Перевірити правильність складання правил за допомогою виведення.
+Перевірити наявність непродуктивних та недосяжних символів:
+
+
+\section{Побудова правил граматики}
+\begin{enumerate}
+    \item \verb|var i:array[1..n] of real; j:array[1..n] of i:integer|
+    \item \verb|var k:array[1..n] of i:integer|
+\end{enumerate}
+
+\subsection{Опис граматики}
+
+% \begin{enumerate}
+%     \item  \verb|I| $\to$ \verb|var SR|
+%     \item  \verb|R| $\to$ \verb|;SR or $|
+%     \item  \verb|S| $\to$ \verb|N:array[1..n] of A|
+%     \item  \verb|N| $\to$ \verb|i or j or k|
+%     \item  \verb|A| $\to$ \verb|N:integer or real|
+% \end{enumerate}
+
+\begin{enumerate}
+    \item  \verb|I| $\to$ \verb|var SR|
+    \item  \verb|R| $\to$ \verb|;SR or $|
+    \item  \verb|S| $\to$ \verb|V of A|
+    \item  \verb|V| $\to$ \verb|N:T|
+    \item  \verb|N| $\to$ \verb|i or j or k|
+    \item  \verb|T| $\to$ \verb|array[1..n] or integer|
+    \item  \verb|A| $\to$ \verb|V or real|
+\end{enumerate}
+
+\newpage
+
+% \subsection{Перевірка граматики}
+% Ланцюжок: \verb|var i:array[1..n] of real; j:array[1..n] of i:integer|
+% \begin{itemize}
+%     \item[]  I $\xrightarrow{1}$ \verb|var SR|
+%     \item[]  $\xrightarrow{3}$ \verb|var N:array[1..n] of AR|
+%     \item[]  $\xrightarrow{4.1}$ \verb|var i:array[1..n] of AR|
+%     \item[]  $\xrightarrow{5.2}$ \verb|var i:array[1..n] of realR|
+%     \item[]  $\xrightarrow{2.1}$ \verb|var i:array[1..n] of real; SR|
+%     \item[]  $\xrightarrow{3}$ \verb|var i:array[1..n] of real; N:array[1..n] of AR|
+%     \item[]  $\xrightarrow{4.2}$ \verb|var i:array[1..n] of real; j:array[1..n] of AR|
+%     \item[]  $\xrightarrow{5.1}$ \verb|var i:array[1..n] of real; j:array[1..n] of N:integerR|
+%     \item[]  $\xrightarrow{4.1}$ \verb|var i:array[1..n] of real; j:array[1..n] of i:integerR|
+%     \item[]  $\xrightarrow{2.2}$ \verb|var i:array[1..n] of real; j:array[1..n] of i:integer|
+% \end{itemize}
+
+\subsection{Перевірка граматики}
+Ланцюжок: \verb|var i:array[1..n] of real; j:array[1..n] of i:integer|
+\begin{itemize}
+    \item[]  I $\xrightarrow{1}$ \verb|var SR|
+    \item[]  I $\xrightarrow{3}$ \verb|var V of AR|
+    \item[]  I $\xrightarrow{4}$ \verb|var N:T of AR|
+    \item[]  I $\xrightarrow{5.1}$ \verb|var i:T of AR|
+    \item[]  I $\xrightarrow{6.1}$ \verb|var i:array[1..n] of AR|
+    \item[]  I $\xrightarrow{7.2}$ \verb|var i:array[1..n] of realR|
+    \item[]  I $\xrightarrow{2.1}$ \verb|var i:array[1..n] of real;SR|
+    \item[]  I $\xrightarrow{3}$ \verb|var i:array[1..n] of real; V of AR|
+    \item[]  I $\xrightarrow{4}$ \verb|var i:array[1..n] of real; N:T of AR|
+    \item[]  I $\xrightarrow{5.2}$ \verb|var i:array[1..n] of real; j:T of AR|
+    \item[]  I $\xrightarrow{6.1}$ \verb|var i:array[1..n] of real; j:array[1..n] of AR|
+    \item[]  I $\xrightarrow{7.1}$ \verb|var i:array[1..n] of real; j:array[1..n] of VR|
+    \item[]  I $\xrightarrow{4}$ \verb|var i:array[1..n] of real; j:array[1..n] of N:TR|
+    \item[]  I $\xrightarrow{5.1}$ \verb|var i:array[1..n] of real; j:array[1..n] of i:TR|
+    \item[]  I $\xrightarrow{6.2}$ \verb|var i:array[1..n] of real; j:array[1..n] of i:integerR|
+    \item[]  I $\xrightarrow{2.2}$ \verb|var i:array[1..n] of real; j:array[1..n] of i:integer|
+\end{itemize}
+
+\newpage
+\subsection{Перевірка на непродуктивність}
+% \begin{enumerate}
+%     \item  R N
+%     \item  R N I
+%     \item  R N I A
+%     \item  R N I A S
+%     \item  нема непродуктивних символів
+% \end{enumerate}
+\begin{enumerate}
+    \item  R N T
+    \item  R N T V
+    \item  R N T V A
+    \item  R N T V A S
+    \item  R N T V A S I
+\end{enumerate}
+нема непродуктивних символів
+
+\subsection{Перевірка на недосяжність}
+% \begin{enumerate}
+%     \item  I
+%     \item  I S R
+%     \item  I S R N A
+%     \item  нема недосяжних символів
+% \end{enumerate}
+\begin{enumerate}
+    \item  I
+    \item  I S R
+    \item  I S R V A
+    \item  I S R V A N T
+\end{enumerate}
+нема недосяжних символів
+
+\subsection{Тип граматики}
+Граматика не є простою. Граматика є LL(1) граматикою.
+
+\newpage
+\section{Побудова магазинного автомату}
+\subsection{Побудова функції ПЕРШ}
+% \begin{itemize}
+%     \item  ПЕРШ(\verb|I| $\to$ \verb|var SR|) = \{\verb|var|\}
+%     \item  ПЕРШ(\verb|R| $\to$ \verb|;SR|) = \{\verb|;|\}
+%     \item  ПЕРШ(\verb|R| $\to$ \verb|$|) = \{\verb|$|\}
+%     \item  ПЕРШ(\verb|S| $\to$ \verb|N:array[1..n] of A|) = ПЕРШ(\verb|N|) = \{\verb|i, j, k|\}
+%     \item  ПЕРШ(\verb|N| $\to$ \verb|i|) = \{\verb|i|\}
+%     \item  ПЕРШ(\verb|N| $\to$ \verb|j|) = \{\verb|j|\}
+%     \item  ПЕРШ(\verb|N| $\to$ \verb|k|) = \{\verb|k|\}
+%     \item  ПЕРШ(\verb|A| $\to$ \verb|N:integer|) = \{\verb|i, j, k|\}
+%     \item  ПЕРШ(\verb|A| $\to$ \verb|real|) = \{\verb|real|\}
+% \end{itemize}
+
+\begin{itemize}
+    \item  ПЕРШ(\verb|I| $\to$ \verb|var SR|) = \{\verb|var|\}
+    \item  ПЕРШ(\verb|R| $\to$ \verb|;SR|) = \{\verb|;|\}
+    \item  ПЕРШ(\verb|R| $\to$ \verb|$|) = \{\verb|$|\}
+    \item  ПЕРШ(\verb|S| $\to$ \verb|V of A|) = ПЕРШ(\verb|V|) = ПЕРШ(\verb|N|) = \{\verb|i, j, k|\}
+    \item  ПЕРШ(\verb|V| $\to$ \verb|N:T|) = ПЕРШ(\verb|N|) = \{\verb|i, j, k|\}
+    \item  ПЕРШ(\verb|N| $\to$ \verb|i|) = \{\verb|i|\}
+    \item  ПЕРШ(\verb|N| $\to$ \verb|j|) = \{\verb|j|\}
+    \item  ПЕРШ(\verb|N| $\to$ \verb|k|) = \{\verb|k|\}
+    \item  ПЕРШ(\verb|T| $\to$ \verb|array[1..n]|) = \{\verb|array|\}
+    \item  ПЕРШ(\verb|T| $\to$ \verb|integer|) = \{\verb|integer|\}
+    \item  ПЕРШ(\verb|A| $\to$ \verb|V|) = ПЕРШ(\verb|V|) = ПЕРШ(\verb|N|) = \{\verb|i, j, k|\}
+    \item  ПЕРШ(\verb|A| $\to$ \verb|real|) = \{\verb|real|\}
+\end{itemize}
+
+\subsection{Побудова функції СЛІД}
+\begin{itemize}
+    \item  СЛІД(\verb|I|) = \{\verb|$|\}
+    \item  СЛІД(\verb|R|) = \{\verb|$|\}
+    \item  СЛІД(\verb|S|) = \{\verb|;|\}
+    \item  СЛІД(\verb|V|) = \{\verb|of|\}
+    \item  СЛІД(\verb|N|) = \{\verb|:|\}
+    \item  СЛІД(\verb|T|) = \{\verb|$|\}
+    \item  СЛІД(\verb|A|) = \{\verb|$|\}
+\end{itemize}
+
+% \subsection{Побудова функції ВИБІР}
+% \begin{itemize}
+%     \item  ВИБІР(\verb|I| $\to$ \verb|var SR|) = ПЕРШ(1) = \{\verb|var|\}
+%     \item  ВИБІР(\verb|R| $\to$ \verb|;SR|) = ПЕРШ(2.1) = \{\verb|;|\}
+%     \item  ВИБІР(\verb|R| $\to$ \verb|$|) = СЛІД(R) = \{\verb|$|\}
+%     \item  ВИБІР(\verb|S| $\to$ \verb|N:array[1..n] of A|) = ПЕРШ(3) = \{\verb|i, j, k|\}
+%     \item  ВИБІР(\verb|N| $\to$ \verb|i|) = ПЕРШ(4.1) = \{\verb|i|\}
+%     \item  ВИБІР(\verb|N| $\to$ \verb|j|) = ПЕРШ(4.2) = \{\verb|j|\}
+%     \item  ВИБІР(\verb|N| $\to$ \verb|k|) = ПЕРШ(4.3) = \{\verb|k|\}
+%     \item  ВИБІР(\verb|A| $\to$ \verb|N:integer|) = ПЕРШ(1) = \{\verb|i, j, k|\}
+%     \item  ВИБІР(\verb|A| $\to$ \verb|real|) = СЛІД(R) = \{\verb|real|\}
+% \end{itemize}
+
+
+% \subsection{Побудова команд розпізнавача}
+% \begin{enumerate}
+%     \item  f (\verb|s, var, I |) = \verb|(s, RS)|\
+%     \item  f (\verb|s, ;, R |) = \verb|(s, RS)|\
+%     \item  f* (\verb|s, $, R |) = \verb|(s, $)|\
+
+
+
+%     \item  f* (\verb|s, S, A |) = \verb|(s, )X(F )|\
+%     \item  f* (\verb|s, C, A |) = \verb|(s, )X(F )|\
+%     \item  f (\verb|s, (, A |) = \verb|(s, )X )|\
+%     \item  f (\verb|s, *, R |) = \verb|(s, RA)|\
+%     \item  f* (\verb|s, ), R |) = \verb|(s, $)|\
+%     \item  f (\verb|s, (, ( |) = \verb|(s, $)|\
+%     \item  f (\verb|s, ), ) |) = \verb|(s, $)|\
+%     \item  f (\verb|s, X, X |) = \verb|(s, $)|\
+%     \item  f* (\verb|s, $, h0 |) = \verb|(s, $)|\
+% \end{enumerate}
+
+% \newpage
+% \subsection{Перевірка команд розпізнавача}
+% Ланцюжок: \verb|#define C(X) (S(X)*(X))|
+
+% \begin{itemize}
+%     \item[]  (s, \quad \verb|#define C(X) (S(X)*(X))$|,           \quad $h_{0}$\verb|I|)      $\vdash$ 1
+%     \item[]  (s, \quad \verb|C(X) (S(X)*(X))$|,           \quad $h_{0}$\verb|)RA()X(F |)      $\vdash$ 3
+%     \item[]  (s, \quad \verb|(X) (S(X)*(X))$|,           \quad $h_{0}$\verb|)RA()X( |)        $\vdash$ 9
+%     \item[]  (s, \quad \verb|X) (S(X)*(X))$|,           \quad $h_{0}$\verb|)RA()X |)          $\vdash$ 11
+%     \item[]  (s, \quad \verb|) (S(X)*(X))$|,           \quad $h_{0}$\verb|)RA() |)            $\vdash$ 10
+%     \item[]  (s, \quad \verb|(S(X)*(X))$|,           \quad $h_{0}$\verb|)RA( |)               $\vdash$ 9
+%     \item[]  (s, \quad \verb|S(X)*(X))$|,           \quad $h_{0}$\verb|)RA |)                 $\vdash$ 4
+%     \item[]  (s, \quad \verb|S(X)*(X))$|,           \quad $h_{0}$\verb|)R)X(F |)              $\vdash$ 2
+%     \item[]  (s, \quad \verb|(X)*(X))$|,           \quad $h_{0}$\verb|)R)X( |)                $\vdash$ 9
+%     \item[]  (s, \quad \verb|X)*(X))$|,           \quad $h_{0}$\verb|)R)X |)                  $\vdash$ 11
+%     \item[]  (s, \quad \verb|)*(X))$|,           \quad $h_{0}$\verb|)R) |)                    $\vdash$ 10
+%     \item[]  (s, \quad \verb|*(X))$|,           \quad $h_{0}$\verb|)R |)                      $\vdash$ 7
+%     \item[]  (s, \quad \verb|(X))$|,           \quad $h_{0}$\verb|)RA |)                      $\vdash$ 6
+%     \item[]  (s, \quad \verb|X))$|,           \quad $h_{0}$\verb|)R)X |)                      $\vdash$ 11
+%     \item[]  (s, \quad \verb|))$|,           \quad $h_{0}$\verb|)R) |)                        $\vdash$ 10
+%     \item[]  (s, \quad \verb|)$|,           \quad $h_{0}$\verb|)R |)                          $\vdash$ 8
+%     \item[]  (s, \quad \verb|)$|,           \quad $h_{0}$\verb|) |)                           $\vdash$ 10
+%     \item[]  (s, \quad \verb|$|,           \quad $h_{0}$\verb||)                              $\vdash$ 12
+%     \item[]  (s, \quad \verb|$|,           \quad \verb|$|) - успішне розпізнавання
+% \end{itemize}
+
+% Після перевірки ми дійшли до заключної конфігурації, отже рядок належить до граматики.
+
+
