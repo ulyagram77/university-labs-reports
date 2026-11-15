@@ -18,14 +18,12 @@ REPORTS_FOLDER	:= $(abspath $(REPORTS_FOLDER))
 PROFILES_FOLDER	:= $(abspath $(PROFILES_FOLDER))
 BUILD_FOLDER	:= $(abspath $(BUILD_FOLDER))
 BUILDS_FOLDER	:= $(abspath $(BUILDS_FOLDER))
-CODE_FOLDER		:= $(abspath $(CODE_FOLDER))
 
 export SRC_FOLDER
 export REPORTS_FOLDER
 export PROFILES_FOLDER
 export BUILD_FOLDER
 export BUILDS_FOLDER
-export CODE_FOLDER
 export MAIN_FILE
 export LATEX_PROGRAM
 export LATEX_ARGS
@@ -49,7 +47,7 @@ export settings_content
 all: build post_build
 
 write_settings:
-	echo "$$settings_content" > ${PROJECT_DIR}/src/settings.tex
+	printf '%s\n' "$$settings_content" > "${PROJECT_DIR}/src/settings.tex"
 
 post_build:
 	cp ${BUILD_FOLDER}/main.pdf ${BUILDS_FOLDER}/${REPORT}.pdf

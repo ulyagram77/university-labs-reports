@@ -9,6 +9,5 @@ services:
             - ${REPORTS_FOLDER}:/reports
             - ${PROFILES_FOLDER}:/profiles
             - ${BUILD_FOLDER}:/build
-            - ${CODE_FOLDER}:/code
         working_dir: /docs
         command: bash -c "mkdir -p /build && ${LATEX_PROGRAM} ${LATEX_ARGS} -output-directory=/build ${MAIN_FILE}"

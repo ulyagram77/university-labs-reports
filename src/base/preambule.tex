@@ -9,7 +9,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{indentfirst}
 \usepackage[dvipsnames]{xcolor}
-\usepackage[colorlinks]{hyperref}
+\usepackage[colorlinks,linkcolor=black]{hyperref}
 % \usepackage{etoolbox}
 
 \usepackage{graphicx}
@@ -29,6 +29,14 @@
 \definecolor{headercolor}{RGB}{150, 150, 150} % Задайте желаемый цве
 
 \usepackage{titlesec}
+\usepackage{titletoc}
+
+% Hide section labels without changing subsection numbering.
+\titleformat{\section}{\normalfont\Large\bfseries}{}{0pt}{}
+\titlecontents{section}[0pt]{\addvspace{1em}\bfseries}
+  {}{}{\titlerule*[.75pc]{.}\contentspage}
+\titlecontents{subsection}[3.8em]{\addvspace{.3em}}
+  {\contentslabel{2.3em}}{}{\titlerule*[.75pc]{.}\contentspage}
 
 
 \captionsetup{labelsep=period}
@@ -43,12 +51,12 @@
 
 % General Setting of listings
 \lstset{
+  basicstyle=\fontsize{12}{14}\selectfont\ttfamily,
   aboveskip=1em,
   breaklines=true,
   abovecaptionskip=-6pt,
   captionpos=b,
   escapeinside={\%*}{*)},
-  frame=single,
   numbers=left,
   numbersep=15pt,
   numberstyle=\tiny,
@@ -57,7 +65,7 @@
 }
 % 0. Basic Color Theme
 \lstdefinestyle{colored}{ %
-  basicstyle=\ttfamily,
+  basicstyle=\fontsize{12}{14}\selectfont\ttfamily,
   backgroundcolor=\color{white},
   commentstyle=\color{green}\itshape,
   keywordstyle=\color{blue}\bfseries\itshape,
@@ -77,7 +85,7 @@
 }
 % 3. Extended theme
 \lstdefinestyle{colorEX}{
-  basicstyle=\ttfamily,
+  basicstyle=\fontsize{12}{14}\selectfont\ttfamily,
   backgroundcolor=\color{white},
   commentstyle=\color{darkgreen}\slshape,
   keywordstyle=\color{blue}\bfseries,
@@ -100,7 +108,7 @@
   xleftmargin=\parindent,
   language=Scilab,
   showstringspaces=false,
-  basicstyle=\footnotesize\ttfamily,
+  basicstyle=\fontsize{12}{14}\selectfont\ttfamily,
   keywordstyle=\bfseries\color{green!40!black},
   commentstyle=\itshape\color{purple!40!black},
   identifierstyle=\color{blue},
@@ -146,7 +154,7 @@
 }%
 
 \lstdefinestyle{colouredRust}%
-{ basicstyle=\scriptsize%
+{ basicstyle=\fontsize{12}{14}\selectfont\ttfamily%
 , identifierstyle=%
 , commentstyle=\color[gray]{0.4}%
 , stringstyle=\color[rgb]{0, 0, 0.5}%

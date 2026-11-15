@@ -2,6 +2,7 @@ build
 src/settings.tex
 *.env*
 !*.env*.template
+.DS_Store
 
 
 ## Core latex/pdflatex auxiliary files:
